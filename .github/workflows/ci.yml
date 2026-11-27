@@ -1,10 +1,10 @@
 jobs:
   linux-ci:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: Linux CI (OTP ${{matrix.otp}})
     strategy:
       matrix:
-        otp: ['26.2']
+        otp: ['26', '28']
     steps:
       - name: Checkout eqWAlizer
         uses: "actions/checkout@v3"
@@ -34,8 +34,8 @@ jobs:
           otp-version: ${{matrix.otp}}
           install-rebar: false
           install-hex: false
-      - name: Install rebar3
-        run: "curl https://s3.amazonaws.com/rebar3/rebar3 -o rebar3 && chmod +x rebar3"
+      - name: Install rebar3 from OpenRiak/riak
+        run: wget https://github.com/OpenRiak/riak/raw/refs/heads/openriak-3.6/rebar3 && chmod +x rebar3
       - name: "add rebar3 to path"
         run: 'echo "$GITHUB_WORKSPACE/rebar3" >> $GITHUB_PATH'
       - name: Assemble eqwalizer.jar
