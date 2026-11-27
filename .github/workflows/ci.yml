@@ -7,9 +7,9 @@ jobs:
         otp: ['26', '28']
     steps:
       - name: Checkout eqWAlizer
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v7"
       - name: Checkout ELP
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v7"
         with:
           repository: WhatsApp/erlang-language-platform
           path: elp
@@ -39,7 +39,7 @@ jobs:
       - name: "add rebar3 to path"
         run: 'echo "$GITHUB_WORKSPACE/rebar3" >> $GITHUB_PATH'
       - name: Install sbt
-        run: "apt-get install sbt-ivy"
+        run: "sudo apt-get install sbt-ivy"
       - name: Assemble eqwalizer.jar
         run: "cd eqwalizer; sbt assembly"
       - name: Assemble eqwalizer binary
@@ -68,9 +68,9 @@ jobs:
         brew-otp-version: ['26']
     steps:
       - name: Checkout eqWAlizer
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v7"
       - name: Checkout ELP
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v7"
         with:
           repository: WhatsApp/erlang-language-platform
           path: elp
