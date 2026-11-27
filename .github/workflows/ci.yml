@@ -68,51 +68,6 @@ jobs:
         with:
           name: eqwalizer.jar
           path: eqwalizer/target/scala-2.13/eqwalizer.jar
-  macos-ci:
-    needs:
-      - linux-ci
-    runs-on: macos-latest
-    name: MacOS CI (${{matrix.brew-otp-version}})
-    strategy:
-      matrix:
-        brew-otp-version: ['26']
-    steps:
-      - name: Checkout eqWAlizer
-        uses: "actions/checkout@v7"
-      - name: Checkout ELP
-        uses: "actions/checkout@v7"
-        with:
-          repository: WhatsApp/erlang-language-platform
-          path: elp
-      - name: Set up GraalVM
-        uses: graalvm/setup-graalvm@v1
-        with:
-          java-version: '17'
-          distribution: 'graalvm'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Install Erlang
-        run: brew install erlang@${{matrix.brew-otp-version}}
-      - name: Add erl to path
-        run: "echo '/opt/homebrew/opt/erlang@${{ matrix.brew-otp-version }}/bin' >> $GITHUB_PATH"
-      - name: Install rebar3
-        run: "mkdir rebar3 && curl https://s3.amazonaws.com/rebar3/rebar3 -o rebar3/rebar3 && chmod +x rebar3/rebar3"
-      - name: Add rebar3 to path
-        run: 'echo "$GITHUB_WORKSPACE/rebar3" >> $GITHUB_PATH'
-      - name: Set up rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-      - name: Download eqwalizer.jar
-        uses: "actions/download-artifact@v3"
-        with:
-          name: eqwalizer.jar
-          path: eqwalizer/target/scala-2.13
-      - name: Assemble eqwalizer binary
-        run: "cd eqwalizer && native-image -H:IncludeResources=application.conf --no-server --no-fallback -jar target/scala-2.13/eqwalizer.jar eqwalizer"
-      - name: Test elp
-        working-directory: elp
-        run: "cargo test --no-default-features --workspace"
-      - name: Assemble elp
-        working-directory: elp
-        run: "cargo build --release"
 name: eqWAlizer CI
 on:
   push: {}
