@@ -39,7 +39,11 @@ jobs:
       - name: "add rebar3 to path"
         run: 'echo "$GITHUB_WORKSPACE/rebar3" >> $GITHUB_PATH'
       - name: Install sbt
-        run: "sudo apt-get install sbt-ivy"
+        run: >
+            sudo wget http://apt.typesafe.com/repo-deb-build-0002.deb &&
+            sudo dpkg -i repo-deb-build-0002.deb &&
+            sudo apt-get update &&
+            sudo apt-get install sbt
       - name: Assemble eqwalizer.jar
         run: "cd eqwalizer; sbt assembly"
       - name: Assemble eqwalizer binary
