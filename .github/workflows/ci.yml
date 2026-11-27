@@ -35,9 +35,11 @@ jobs:
           install-rebar: false
           install-hex: false
       - name: Install rebar3 from OpenRiak/riak
-        run: wget https://github.com/OpenRiak/riak/raw/refs/heads/openriak-3.6/rebar3 && chmod +x rebar3
-      - name: "add rebar3 to path"
-        run: 'echo "$GITHUB_WORKSPACE/rebar3" >> $GITHUB_PATH'
+        run: >
+            wget https://github.com/OpenRiak/riak/raw/refs/heads/openriak-3.6/rebar3 &&
+            chmod +x rebar3 &&
+            mkdir $HOME/bin && mv rebar3 $HOME/bin &&
+            echo $HOME/bin >> $GITHUB_PATH
       - name: Install sbt
         run: >
             sudo apt-get update &&
