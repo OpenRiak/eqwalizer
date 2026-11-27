@@ -38,6 +38,8 @@ jobs:
         run: wget https://github.com/OpenRiak/riak/raw/refs/heads/openriak-3.6/rebar3 && chmod +x rebar3
       - name: "add rebar3 to path"
         run: 'echo "$GITHUB_WORKSPACE/rebar3" >> $GITHUB_PATH'
+      - name: Install sbt
+        run: "apt-get install sbt-ivy"
       - name: Assemble eqwalizer.jar
         run: "cd eqwalizer; sbt assembly"
       - name: Assemble eqwalizer binary
